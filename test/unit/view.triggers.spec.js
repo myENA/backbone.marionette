@@ -31,6 +31,10 @@ describe('view triggers', function() {
       expect(this.fooHandlerStub).to.have.been.calledOnce;
     });
 
+    it('should include the DOM event in the event args', function() {
+      expect(this.fooHandlerStub.lastCall.args[0]).to.contain({event: this.fooEvent});
+    });
+
     it('should include the view in the event args', function() {
       expect(this.fooHandlerStub.lastCall.args[0]).to.contain({view: this.view});
     });

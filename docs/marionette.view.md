@@ -283,15 +283,17 @@ includes the following:
 * view
 * model
 * collection
+* event
 
-These properties match the `view`, `model`, and `collection` properties of the view that triggered the event.
+These properties match the `view`, `model`, and `collection` properties of the view that triggered the event. `event` matches the event that was triggered (eg: the DOM event)
 
 ```js
 var MyView = Marionette.ItemView.extend({
   // ...
 
   triggers: {
-    "click .do-something": "some:event"
+    "click .do-something": "some:event",
+    "keyup .do-something": "check:enter",
   }
 });
 
@@ -301,6 +303,16 @@ view.on("some:event", function(args){
   args.view; // => the view instance that triggered the event
   args.model; // => the view.model, if one was set on the view
   args.collection; // => the view.collection, if one was set on the view
+  args.event; // => the DOM click event, in this case, the "click" MouseEvent
+});
+view.on("check:enter, function(args){
+  args.view; // => the view instance that triggered the event
+  args.model; // => the view.model, if one was set on the view
+  args.collection; // => the view.collection, if one was set on the view
+  args.event; // => the DOM click event, in this case, the "keyup" KeyboardEvent
+  if (13 === args.event.keyCode) {
+    // user pressed Enter. Do something special
+  }
 });
 ```
 
